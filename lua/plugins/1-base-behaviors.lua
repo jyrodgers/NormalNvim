@@ -582,7 +582,7 @@ return {
   {
     "smoka7/hop.nvim",
     cmd = { "HopWord" },
-    opts = { keys = "etovxqpdygfblzhckisuran" },
+    opts = { keys = "asdfjkl" },
     config = function(_, opts)
       require("hop").setup(opts)
     end,
