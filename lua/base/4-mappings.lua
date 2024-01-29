@@ -830,6 +830,10 @@ if is_available "telescope.nvim" then
     function() require("telescope.builtin").buffers() end,
     desc = "Find buffers",
   }
+  maps.n["<leader>ff"] = {
+    function() require("telescope.builtin").find_files() end,
+    desc = "Find files"
+  }
   maps.n["<leader>fw"] = {
     function() require("telescope.builtin").grep_string() end,
     desc = "Find word under cursor in project",
@@ -891,16 +895,16 @@ if is_available "telescope.nvim" then
     end,
     desc = "Find themes",
   }
-  maps.n["<leader>ff"] = {
-    function()
-      require("telescope.builtin").live_grep {
-        additional_args = function(args)
-          return vim.list_extend(args, { "--hidden", "--no-ignore" })
-        end,
-      }
-    end,
-    desc = "Find words in project",
-  }
+  --maps.n["<leader>ff"] = {
+  --  function()
+  --    require("telescope.builtin").live_grep {
+  --      additional_args = function(args)
+  --        return vim.list_extend(args, { "--hidden", "--no-ignore" })
+  --      end,
+  --    }
+  --  end,
+  --  desc = "Find words in project",
+  --}
   maps.n["<leader>fF"] = {
     function() require("telescope.builtin").live_grep() end,
     desc = "Find words in project (no hidden)",
@@ -943,17 +947,21 @@ if is_available "telescope.nvim" then
     }
   end
 
+  maps.n["<leader>fr"] = {
+    function() require("telescope.builtin").oldfiles() end,
+    desc = "Find history"
+  }
   -- extra - spectre.nvim (search and replace in project)
-  if is_available "nvim-spectre" then
-    maps.n["<leader>fr"] = {
-      function() require("spectre").toggle() end,
-      desc = "Find and replace word in project",
-    }
-    maps.n["<leader>fb"] = {
-      function() require("spectre").toggle { path = vim.fn.expand "%:t:p" } end,
-      desc = "Find and replace word in buffer",
-    }
-  end
+  --if is_available "nvim-spectre" then
+  --  maps.n["<leader>fr"] = {
+  --    function() require("spectre").toggle() end,
+  --    desc = "Find and replace word in project",
+  --  }
+  --  maps.n["<leader>fb"] = {
+  --    function() require("spectre").toggle { path = vim.fn.expand "%:t:p" } end,
+  --    desc = "Find and replace word in buffer",
+  --  }
+  --end
 
   -- extra - luasnip
   if is_available "LuaSnip" and is_available "telescope-luasnip.nvim" then
@@ -1270,23 +1278,21 @@ end
 
 -- hop.nivm ----------------------------------------------------------------
 if is_available "hop.nvim" then
-  -- Note that Even though we are using ENTER for hop, you can still select items
-  -- from special menus like 'quickfix', 'q?' and 'q:' with <C+ENTER>.
-
-  maps.n["<C-m>"] = { -- The terminal undersand C-m and ENTER as the same key.
-    function()
-      require "hop"
-      vim.cmd("silent! HopWord")
-    end,
-    desc = "Hop to word",
-  }
-  maps.x["<C-m>"] = { -- The terminal undersand C-m and ENTER as the same key.
-    function()
-      require "hop"
-      vim.cmd ("silent! HopWord")
-    end,
-    desc = "Hop to word",
-  }
+  local hop = require("hop")
+  local directions = require("hop.hint").HintDirection
+  maps.n["<leader>hc"] = { "<cmd>HopChar1<cr>", desc = "Hop to character" }
+  vim.keymap.set('', 'f', function()
+    hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true })
+  end, {remap=true})
+  vim.keymap.set('', 'F', function()
+    hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true })
+  end, {remap=true})
+  vim.keymap.set('', 't', function()
+    hop.hint_char1({ direction = directions.AFTER_CURSOR, current_line_only = true, hint_offset = -1 })
+  end, {remap=true})
+  vim.keymap.set('', 'T', function()
+    hop.hint_char1({ direction = directions.BEFORE_CURSOR, current_line_only = true, hint_offset = 1 })
+  end, {remap=true})
 end
 
 utils.set_mappings(maps)
