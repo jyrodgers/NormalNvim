@@ -899,6 +899,7 @@ return {
   --  https://github.com/folke/which-key.nvim
   {
     "folke/which-key.nvim",
+    enabled = false,
     event = "VeryLazy",
     opts = {
       icons = { group = vim.g.icons_enabled and "" or "+", separator = "" },
