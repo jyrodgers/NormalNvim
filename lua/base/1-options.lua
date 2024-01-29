@@ -36,7 +36,7 @@ local options = {
     number = true, -- Show numberline.
     preserveindent = true, -- Preserve indent structure as much as possible.
     pumheight = 10, -- Height of the pop up menu.
-    relativenumber = false, -- Show relative numberline.
+    relativenumber = true, -- Show relative numberline.
     shiftwidth = 2, -- Number of space inserted for indentation.
     showmode = false, -- Disable showing modes in command line.
     showtabline = 2, -- always display tabline.
@@ -63,12 +63,12 @@ local options = {
     mousescroll = "ver:1,hor:0", -- Disables hozirontal scroll in neovim.
     guicursor = "n:blinkon200,i-ci-ve:ver25", -- Enable cursor blink.
     autochdir = true, -- Use current file dir as working dir (See project.nvim).
-    scrolloff = 1000, -- Number of lines to leave before/after the cursor when scrolling. Setting a high value keep the cursor centered.
+    scrolloff = 5, -- Number of lines to leave before/after the cursor when scrolling. Setting a high value keep the cursor centered.
     sidescrolloff = 8, -- Same but for side scrolling.
     selection = "old", -- Don't select the newline symbol when using <End> on visual mode.
   },
   g = {
-    mapleader = " ", -- Set leader key.
+    mapleader = ";", -- Set leader key.
     maplocalleader = ",", -- Set default local leader key.
     big_file = { size = 1024 * 100, lines = 10000 }, -- For files bigger than this, disable 'treesitter'.
 
